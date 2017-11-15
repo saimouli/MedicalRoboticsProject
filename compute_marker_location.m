@@ -4,7 +4,6 @@ function centroids = compute_marker_location(img)
 % Perform necessary image processing operations to get the location of the
 % centroids
 %%%%%%%%%%%%%%%%%%%% YOUR CODE BELOW THIS LINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-img= 'markers.jpeg';
 img= imread(img);
 %% Choose an appropriate threshold to segment the body of the target
 hsv_img= rgb2hsv(img);
@@ -13,35 +12,40 @@ h_img= hsv_img(:,:,1);
 v_img= hsv_img(:,:,3);
 %imtool(v_img);
 
-im_h_bw = h_img >= 0.15 & h_img <= 0.25;
-im_v_bw = v_img >= 0.30 & v_img <= 0.57;
+im_h_bw = h_img >= 0.10 & h_img <= 0.55;
+%imshow(im_h_bw);
+im_v_bw = v_img >= 0.25 & v_img <= 0.85;
+%imshow(im_v_bw);
 fiducial_mask = im_h_bw & im_v_bw;
-imshow(fiducial_mask);
+%imshow(fiducial_mask);
 %% Remove any unwanted blobs by querying the area or some morphological cleaning
 bw_1=bwareaopen(fiducial_mask,90);
-imshow(bw_1);
 %% Invert the Image to get blobs corresponding to the internal circles of the target
 %bw_2 = 1 - bw_1;
 %imshow(bw_2);
 
+bw_1 = imfill(bw_1,'holes');
+imshow(bw_1);
 
 label = bwlabel(bw_1);
 stats = regionprops(logical(bw_1), 'Area', 'Centroid', 'Eccentricity');
 
-[m n]= size(img);
-bw_3=false(m,n);
+[m, l]= size(img);
+bw_3=false(m,640);
+imshow(bw_3);
 for i=1:length(stats)
-    if((stats(i).Eccentricity) <0.97 & stats(i).Area >=100)
+    if((stats(i).Eccentricity) <0.6 & stats(i).Area >=100 & stats(i).Area <=350)
        bw_3(label==i)=1;
     end
 end
 
+imshow(bw_3);
 structelem = strel('disk',2);
 bw_4 = imdilate(bw_3, structelem);
-imshow(bw_4);
+%imshow(bw_4);
 %% Get the centroids of the isolated circular blobs
-label2 = bwlabel(bw_4);
-stats2 = regionprops(logical(bw_4),'Centroid');
+label2 = bwlabel(bw_3);
+stats2 = regionprops(logical(bw_3),'Centroid');
 % Iterate over the centroids to gather the centroid positions. 
 for j=1:length(stats2)
     cod(:,j)= stats2(j).Centroid;
