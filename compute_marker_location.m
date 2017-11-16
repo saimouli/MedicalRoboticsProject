@@ -13,11 +13,11 @@ v_img= hsv_img(:,:,3);
 %imtool(v_img);
 
 im_h_bw = h_img >= 0.10 & h_img <= 0.55;
-%imshow(im_h_bw);
+imshow(im_h_bw);
 im_v_bw = v_img >= 0.25 & v_img <= 0.85;
-%imshow(im_v_bw);
+imshow(im_v_bw);
 fiducial_mask = im_h_bw & im_v_bw;
-%imshow(fiducial_mask);
+imshow(fiducial_mask);
 %% Remove any unwanted blobs by querying the area or some morphological cleaning
 bw_1=bwareaopen(fiducial_mask,90);
 %% Invert the Image to get blobs corresponding to the internal circles of the target
@@ -34,7 +34,7 @@ stats = regionprops(logical(bw_1), 'Area', 'Centroid', 'Eccentricity');
 bw_3=false(m,640);
 imshow(bw_3);
 for i=1:length(stats)
-    if((stats(i).Eccentricity) <0.6 & stats(i).Area >=100 & stats(i).Area <=350)
+    if((stats(i).Eccentricity) <0.6 & stats(i).Area >=100 & stats(i).Area <=550)
        bw_3(label==i)=1;
     end
 end
@@ -42,7 +42,7 @@ end
 imshow(bw_3);
 structelem = strel('disk',2);
 bw_4 = imdilate(bw_3, structelem);
-%imshow(bw_4);
+imshow(bw_4);
 %% Get the centroids of the isolated circular blobs
 label2 = bwlabel(bw_3);
 stats2 = regionprops(logical(bw_3),'Centroid');
