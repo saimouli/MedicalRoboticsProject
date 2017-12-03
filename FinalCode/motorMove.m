@@ -16,9 +16,6 @@ motor_y = 2;
 motor_z = 3;
 
 %% Integers for Deciding the direction of rotation
-clockwise = 1;
-anticlockwise = 2;
-
 %% 
 % Sample code for running the motor of your choice.
 % This can be used for testing your connections and checking whether all
