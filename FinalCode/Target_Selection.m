@@ -82,6 +82,20 @@ function Home_Callback(hObject, eventdata, handles)
 % hObject    handle to Home (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+clockwise = 1;
+anticlockwise = 2;
+
+x= 78; %mm
+dirX= 1;
+
+y= 32; %mm
+dirY= 1;
+
+z=20; %mm
+dirZ= 1; 
+motorMove(0,dirX,0,dirY,z,dirZ)
+pause(3)
+motorMove(x,dirX,y,dirY,0,dirZ)
 end
 
 % --- Executes on button press in Target1.
@@ -92,16 +106,17 @@ function Target1_Callback(hObject, eventdata, handles)
 clockwise = 1;
 anticlockwise = 2;
 
-x= 75; %mm
+x= 6; %mm
 dirX= 2;
 
-y= 12; %mm
+y= 30; %mm
 dirY= 2;
 
-z= 20; %mm
+z= 12; %mm
 dirZ= 2; 
 
 motorMove(x,dirX,y,dirY,z,dirZ)
+
 end
 
 % --- Executes on button press in Target2.
@@ -112,16 +127,18 @@ function Target2_Callback(hObject, eventdata, handles)
 clockwise = 1;
 anticlockwise = 2;
 
-x= 75; %mm
+x= 38; %mm
 dirX= 2;
 
-y= 12; %mm
+y= 23; %mm
 dirY= 2;
 
-z= 20; %mm
-dirZ= 2; 
-
-motorMove(x,dirX,y,dirY,z,dirZ)
+z= 17; %mm
+dirZ= 1; 
+z1 =9;
+motorMove(0,dirX,0,dirY,z,dirZ)
+pause(3)
+motorMove(x,dirX,y,dirY,z1,2)
 end
 
 % --- Executes on button press in Target3.
@@ -132,16 +149,19 @@ function Target3_Callback(hObject, eventdata, handles)
 clockwise = 1;
 anticlockwise = 2;
 
-x= 75; %mm
+x= 34; %mm
 dirX= 2;
 
-y= 12; %mm
-dirY= 2;
+y= 24; %mm
+dirY= 1;
 
-z= 20; %mm
-dirZ= 2; 
+z=20; %mm
+dirZ= 1; 
+z1=9;
 
-motorMove(x,dirX,y,dirY,z,dirZ)
+motorMove(0,dirX,0,dirY,z,dirZ)
+pause(3)
+motorMove(x,dirX,22,dirY,z1,2)
 end
 
 % --- Executes on button press in OFF.
